@@ -1,104 +1,49 @@
-#ifndef _PRINTF_H
-#define _PRINTF_H
+#ifndef MAIN_H
+#define MAIN_H
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdarg.h>
 #include <limits.h>
-#include <stdlib.h>
+#include <unistd.h>
 
-#define OUTPUT_BUF_SIZE 1024
-#define BUF_FLUSH -1
 
-#define NULL_STRING "(null)"
-
-#define PARAM_INT {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-#define CONVERT_LOWERCASE 1
-#define CCONVERT_UNSIGNED 2
 
 /**
- * struct parameters - parameters struct
+ * struct format - match the conversion specifiers for printf
+ * @id: type char pointer of the specifier i.e (l, h) for (d, i, u, o, x, X)
+ * @f: type pointer to function for the conversion specifier
  *
- * @unsign: flag for unsigned integer
- * @plus_flag: on if plus_flag spesified
- * @hashtag_flag: on if plus_flag spesified
- * @zero_flag: on if plus_flag spesified
- * @minus_flag: on if plus_flag spesified
- *
- * @width: field width spesified
- * @precision: field precision spesified
- *
- * @h_modifier: on if h_modifier is spesified
- * @l_modifier: on if l_modifier is spesified
- *
-*/
-typdef struct parameters
+ */
+
+typedef struct format
 {
-unsigned int unsign    : 1;
+	char *id;
+	int (*f)();
+} convert_match;
 
-unsigned int plus_flag  : 1;
-unsigned int space_flag  : 1;
-unsigned int hashtag_flag   : 1;
-unsigned int zero_flag     : 1;
-unsigned int minus_flag   : 1;
-
-unsigned int width;
-unsigned int precision;
-
-unsigned int h_modifier    : 1;
-unsigned int l_modifier   : 1;
-} params_t;
-
-/**
- * struct specifier - struct token
- *
- * @specifier: format token
- * @f: the function associated
-*/
-
-typedef struct specifier
-{
-char *specifier;
-int (*f)(va_list, params_t *);
-} specifier_t;
-
-int _puts(char *str);
-int _putchar(int c);
-
-int print_char(va_list ap, params_t *params);
-int print_int(va_list ap, params_t *params);
-int print_string(va_list ap, params_t *params);
-int print_percent(va_list ap, params_t *params);
-int print_s(va_list ap, params_t *params);
-
-char *convert(long int num, int base, int flags, params_t *params);
-int print_unsigned (va_list ap, params_t *params);
-int print_address(va_list ap, params_t *params);
-
-int (*get_specifier(char *s))(va_list ap, params_t *params);
-int get_print_func(char *s))(va_list ap, params_t *params);
-int get_flag(char *s, params_t *params);
-int get_modifier(char *s, params_t *params);
-char get_width(char *s, params_t *params, va_list ap);
-
-int print_hex(va_list ap, params_t *params);
-int print_HEX(va_list ap, params_t *params);
-int print_binary(va_list ap, params_t *params);
-int print_octal(va_list ap, params_t *params);
-
-int print_from_to(char *start, char *stop, char *except);
-int print_rev(va_list ap, params_t *params);
-int print_rot13(va_list ap, params_t *params);
-
-int _isdigit(intc);
+int printf_pointer(va_list val);
+int printf_hex_aux(unsigned long int num);
+int printf_HEX_aux(unsigned int num);
+int printf_exclusive_string(va_list val);
+int printf_HEX(va_list val);
+int printf_hex(va_list val);
+int printf_oct(va_list val);
+int printf_unsigned(va_list args);
+int printf_bin(va_list val);
+int printf_srev(va_list args);
+int printf_rot13(va_list args);
+int printf_int(va_list args);
+int printf_dec(va_list args);
 int _strlen(char *s);
-int print_number(char *str, params_t *params);
-int print_number_right_shift(char *str, params_t *params);
-int print_number_left_shift(char *str, params_t *params);
-
-void init_params(params_t *params, va_list ap);
-
-char *get_precision(char *p, params_t *params, va_list ap);
-
+int *_strcpy(char *dest, char *src);
+int _strlenc(const char *s);
+int rev_string(char *s);
+int _strlenc(const char *s);
+int printf_37(void);
+int printf_char(va_list val);
+int printf_string(va_list val);
+int _putchar(char c);
 int _printf(const char *format, ...);
 
 #endif
