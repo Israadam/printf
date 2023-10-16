@@ -14,10 +14,11 @@
  * @f: type pointer to function for the conversion specifier
  *
  */
-
-
-
-
+int _strlen(char *str);
+int _cstrlen(const char *str);
+int print_37(void);
+int printf_char(va_list val);
+int printf_str(va_list val);
 int _putchar(char c);
 int _printf(const char *format, ...);
 int binary(int num);
