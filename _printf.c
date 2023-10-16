@@ -1,51 +1,54 @@
 #include "main.h"
 
 /**
- * _printf - formatted output conversion and print data.
- * @format: input string.
- *
- * Return: number of chars printed.
- */
+ *_printf - is a function that selects the correct function to print.
+ * @format: identifier to look for.
+ * Return: the length of the string.
+*/
+
 int _printf(const char *format, ...)
 {
-	unsigned int i = 0, len = 0, ibuf = 0;
-	va_list arguments;
-	int (*function)(va_list, char *, unsigned int);
-	char *buffer;
+	int print_char = 0;
+	va_list list;
 
-	va_start(arguments, format), buffer = malloc(sizeof(char) * 1024);
-	if (!format || !buffer || (format[i] == '%' && !format[i + 1]))
+	if (*format == NULL)
 		return (-1);
-	if (!format[i])
-		return (0);
-	for (i = 0; format && format[i]; i++)
+	va_start(list, format);
+
+	while (*format)
 	{
-		if (format[i] == '%')
-		{
-			if (format[i + 1] == '\0')
-			{	print_buf(buffer, ibuf), free(buffer), va_end(arguments);
-				return (-1);
-			}
-			else
-			{	function = get_print_func(format, i + 1);
-				if (function == NULL)
-				{
-					if (format[i + 1] == ' ' && !format[i + 2])
-						return (-1);
-					handl_buf(buffer, format[i], ibuf), len++, i--;
-				}
-				else
-				{
-					len += function(arguments, buffer, ibuf);
-					i += ev_print_func(format, i + 1);
-				}
-			} i++;
-		}
-		else
-			handl_buf(buffer, format[i], ibuf), len++;
-		for (ibuf = len; ibuf > 1024; ibuf -= 1024)
-			;
+		if (*format != '%')
+		       	write(1, format, 1);
+		print_char++;
 	}
-	print_buf(buffer, ibuf), free(buffer), va_end(arguments);
-	return (len);
+	else
+	{
+		format++;
+		if (*format == '\0')
+		       	break;
+		if (*format == '%')
+		{
+			write(1, format, 1);
+			print_char++;
+		}
+		if (*format == 'c')
+		{
+			char c = va_arg(list, int);
+
+			write(1, &c, 1);
+		       	print_char++;
+		}
+		if (*format == 's')
+		{
+			char *str = va_arg(list, char*);
+			int str_leng = 0;
+
+			while (str[str_leng] != '\0') str_leng++; 
+			write(1, str, str_leng);
+			print_char++;
+		}
+
+	format++;
 }
+va_end(list);
+return (print_char *);
