@@ -9,5 +9,5 @@
 int _printf(const char *format, ...);
 int binary(int num);
 int octal(int num);
-
+int printf_int(va_list args);
 #endif
