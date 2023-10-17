@@ -1,6 +1,7 @@
 #ifndef MAIN_H
 #define MAIN_H
 #include <stdarg.h>
+<<<<<<< HEAD
 #include <stdio.h>
 #include <unistd.h>
 #define UNUSED(x) (void)(x)
@@ -20,6 +21,11 @@
  * @fn: The function associated.
  */
 struct fmt
+=======
+#include <limits.h>
+
+typedef struct format
+>>>>>>> 3ec71498933fdd4aee355c707626ab1eb47fe10f
 {
 char fmt;
 int (*fn)(va_list, char[], int, int, int, int);
