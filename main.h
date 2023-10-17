@@ -1,34 +1,37 @@
 #ifndef MAIN_H
 #define MAIN_H
-
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <stdarg.h>
-#include <limits.h>
-
-
-typedef struct format
+#include <stdio.h>
+#include <unistd.h>
+#define UNUSED(x) (void)(x)
+#define BUFF_SIZE 1024
+/* FLAGS */
+#define F_MINUS 1
+#define F_PLUS 2
+#define F_ZERO 4
+#define F_HASH 8
+#define F_SPACE 16
+/* SIZES */
+#define S_LONG 2
+#define S_SHORT 1
+/**
+ * struct fmt - Struct op
+ * @fmt: The format.
+ * @fn: The function associated.
+ */
+struct fmt
 {
-	char *id;
-	int (*f)();
-} match;
-
-int _strlen(char *str);
-int _cstrlen(const char *str);
-int print_37(void);
-int printf_char(va_list val);
-int printf_str(va_list val);
-int _putchar(char c);
+char fmt;
+int (*fn)(va_list, char[], int, int, int, int);
+};
+/**
+ * typedef struct fmt fmt_t - Struct op
+ *
+ * @fmt: The format.
+ * @fm_t: The function associated.
+ */
+typedef struct fmt fmt_t;
 int _printf(const char *format, ...);
-int binary(int num);
-int octal(int num);
-int printf_int(va_list args);
-int printf_dec(va_list args);
-int print_bin(va_list val);
-int printf_unsigned(va_list args);
-int print_oct(va_list val);
-int printf_HEX(va_list val);
-int printf_hex(va_list val);
-
+int handle_print(const char *fmt, int *i,
+va_list list, char buffer[], int flags, int width, int precision, int size);
 #endif

@@ -1,45 +1,59 @@
 #include "main.h"
-
+#include <stdarg.h>
+#include <stddef.h>
 /**
- * _printf - mimics printf
- * @format: identifier
- * Return: int
+ *_printf - is a function that selects the correct function to print.
+ * @format: identifier to look for.
+ * Return: the length of the string.
 */
 
 int _printf(const char *format, ...)
 {
-	match m[] = {
-		{"%c", printf_char}, {"%s", printf_str},
-		{"%%", print_37}, {"%d", printf_dec}, {"%i", printf_int}, {"%b", print_bin},
-		{"%u", printf_unsigned}, {"%o", print_oct},
-		{"%x", printf_hex}, {"%X", printf_HEX}
-	};
-	va_list args;
-	int i = 0;
-	int len = 0;
-	int j;
-	va_start(args, format);
-	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
+	int print_char = 0;
+	va_list list;
+
+	if (*format == NULL)
 		return (-1);
-Here:
-	while (format[i])
+	va_start(list, format);
+
+	while (*format)
 	{
-		j = 13;
-		
-		while (j >= 0)
-		{
-			if (m[j].id[0] == format[i] && m[j].id[1] == format[i + 1])
-			{
-				len = len + m[j].f(args);
-				i = i + 2;
-				goto Here;
-			}
-			j--;
-		}
-		_putchar(format[i]);
-		i++;
-		len++;
+		if (*format != '%')
+			write(1, format, 1);
+		print_char++;
 	}
-	va_end(args);
-	return (len);
+	if
+	{
+	else
+	{
+		format++;
+		if (*format == '\0')
+			break;
+		if (*format == '%')
+		{
+			write(1, format, 1);
+			print_char++;
+		}
+		if (*format == 'c')
+		{
+			char c = va_arg(list, int);
+
+			write(1, &c, 1);
+			print_char++;
+		}
+		if (*format == 's')
+		{
+			char *str = va_arg(list, char*);
+			int str_leng = 0;
+
+			while (str[str_leng] != '\0')
+				str_leng++;
+			write(1, str, str_leng);
+			print_char++;
+		}
+
+	}
+	format++;
 }
+va_end(list);
+return (print_char *);

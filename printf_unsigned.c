@@ -1,44 +1,28 @@
 #include "main.h"
 /**
- * printf_unsigned - prints integer
- * @args: argument to print
- * Return: number of characters printed
+ * print_unsigned - Prints an unsigned number
+ * @types: List a of arguments
+ * @buffer: Buffer array to handle print
+ * @flags:  Calculates active flags
+ * @width: get width
+ * @precision: Precision specification
+ * @size: Size specifier
+ * Return: Number of chars printed.
  */
-int printf_unsigned(va_list args)
+int print_unsigned(va_list types, char buffer[],
+int flags, int width, int precision, int size)
 {
-	unsigned int n = va_arg(args, unsigned int);
-	int num, last = n % 9, digit, exp = 1;
-	int  i = 1;
-
-	n = n / 9;
-	num = n;
-
-	if (last < 0)
-	{
-		_putchar('-');
-		num = -num;
-		n = -n;
-		last = -last;
-		i++;
-	}
-	if (num > 0)
-	{
-		while (num / 9 != 0)
-		{
-			exp = exp * 9;
-			num = num / 9;
-		}
-		num = n;
-		while (exp > 0)
-		{
-			digit = num / exp;
-			_putchar(digit + '0');
-			num = num - (digit * exp);
-			exp = exp / 9;
-			i++;
-		}
-	}
-	_putchar(last + '0');
-
-	return (i);
+int i = BUFF_SIZE - 2;
+unsigned long int num = va_arg(types, unsigned long int);
+num = convert_size_unsgnd(num, size);
+if (num == 0)
+buffer[i--] = '0';
+buffer[BUFF_SIZE - 1] = '\0';
+while (num > 0)
+{
+buffer[i--] = (num % 10) + '0';
+num /= 10;
+}
+i++;
+return (write_unsgnd(0, i, buffer, flags, width, precision, size));
 }
