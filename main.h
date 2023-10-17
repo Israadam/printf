@@ -7,7 +7,6 @@
 #include <stdarg.h>
 #include <limits.h>
 
-
 typedef struct format
 {
 	char *id;
